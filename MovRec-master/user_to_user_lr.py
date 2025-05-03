@@ -21,7 +21,7 @@ def uset_to_user(user_id):
         i_movie_rating_map= dict(cursor.fetchall())
         user_movies_set=set(i_movie_rating_map)
         s=SortedList()
-        rating1 = pd.read_csv(r'D:\movrec\data_preprocessing\cpdata3v2\ratings.csv')
+        rating1 = pd.read_csv(r'E:\data_preprocessing\cpdata3v2\ratings.csv')
         data = {}
         for uid, mid, r in zip(rating1['userId'], rating1['movieId'], rating1['rating']):
             data.setdefault(uid, {})[mid] = r
@@ -36,7 +36,7 @@ def uset_to_user(user_id):
                 continue
             else:
                 result=persen_correlation(i_movie_rating_map,rating,common_movie_rating,common_set)                     
-                if result>=0.65:
+                if result>=0.5:
                     if len(s)<20:
                         s.add((result,u))
                     else:
@@ -46,11 +46,13 @@ def uset_to_user(user_id):
         users=tuple([i[1] for i in s])
         movies_tuple = tuple(user_movies_set)
         if len(users) ==0:
+            print("No users found")
             return 0
         query='''SELECT DISTINCT movie_id,avg_rate FROM model.rating1 WHERE user_id in %s AND movie_id not in %s and movie_id not in (SELECT movie_id FROM model.model_recommendation WHERE user_id=%s)'''
-        cursor.execute(query,(users,movies_tuple,user_id))
+        cursor.execute(query,(users,movies_tuple,user_id,))
         size=len(s)
         if size==0:
+            print("No movies found")
             return 0
         i=size-1
         non_seen_movie=dict(cursor.fetchall())
@@ -86,4 +88,5 @@ def uset_to_user(user_id):
                 connect.rollback()
                 continue
         return 1
+        connect.commit()
 output=uset_to_user(user_id)

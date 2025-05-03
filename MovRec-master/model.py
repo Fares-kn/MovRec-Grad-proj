@@ -4,14 +4,22 @@ import psycopg2
 from sortedcontainers import SortedList
 connection_sting= "postgres://postgres:postgres@localhost:5432/movrec"
 device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-title=torch.load(r'D:\movrec\model\toknized_tensor\title.pt')
-cast=torch.load(r'D:\movrec\model\toknized_tensor\cast.pt')
-director=torch.load(r'D:\movrec\model\toknized_tensor\director.pt')
-genre=torch.load(r'D:\movrec\model\toknized_tensor\genre.pt')
-overrview=torch.load(r'D:\movrec\model\toknized_tensor\overrview.pt')
-numeric_movie_data=torch.load(r'D:\movrec\model\toknized_tensor\numeric_movie_data.pt')
-production_countries=torch.load(r'D:\movrec\model\toknized_tensor\production_countries.pt')
-production_compaines=torch.load(r'D:\movrec\model\toknized_tensor\production_compaines.pt')
+title=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\title.pt', map_location=torch.device('cpu'))
+title=title.to(device=device)
+cast=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\cast.pt', map_location=torch.device('cpu'))
+cast=cast.to(device=device)
+director=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\director.pt', map_location=torch.device('cpu'))
+director=director.to(device=device)
+genre=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\genre.pt', map_location=torch.device('cpu'))
+genre=genre.to(device=device)
+overrview=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\overrview.pt', map_location=torch.device('cpu'))
+overrview=overrview.to(device=device)
+numeric_movie_data=torch.load(r'E:\MovRec-Initial\MovRec\MovRec\toknized_tensor\numeric_movie_data.pt', map_location=torch.device('cpu'))
+numeric_movie_data=numeric_movie_data.to(device=device)
+production_countries=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\production_countries.pt', map_location=torch.device('cpu'))
+production_countries=production_countries.to(device=device)
+production_compaines=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\production_compaines.pt', map_location=torch.device('cpu')    )
+production_compaines=production_compaines.to(device=device)
 class FinalModel(torch.nn.Module):
     def __init__(self,in_out_list:list,activation):
         super().__init__()
@@ -53,7 +61,7 @@ class FinalModel(torch.nn.Module):
         x=self.output(x)
         return x.squeeze()
 model=FinalModel([256,128],torch.nn.ReLU())
-path=r'D:\movrec\model\hybrid model\adjust_user\model.pth'
+path=r'E:\MovRec-Initial\MovRec\MovRec\AiModel\model.pth'
 model.load_state_dict(torch.load(path))
 model=model.to(device=device)
 user_id=int(sys.argv[1])
@@ -63,7 +71,7 @@ with torch.inference_mode():
         query='''SELECT * FROM model.user_latent_attributes WHERE user_id=%s;'''
         cursor.execute(query,(user_id,))
         user=torch.tensor(cursor.fetchall()[0][1:],dtype=torch.float32,device=device)
-        query='''SELECT movie_id FROM movies WHERE movie_id not in(SELECT movie_id FROM watch_events  WHERE user_id=%s UNION SELECT movie_id FROM model.user_recommendation WHERE user_id=%s)'''
+        query='''SELECT movie_id FROM movies WHERE movie_id not in(SELECT movie_id FROM watch_events  WHERE user_id=%s UNION SELECT movie_id FROM model.user_recommendation WHERE user_id=%s )'''
         cursor.execute(query,(user_id,user_id))
         movie_ids = [row[0] for row in cursor.fetchall()]
         movie_list=SortedList()
@@ -85,3 +93,5 @@ with torch.inference_mode():
                 print(i,e)
                 break
             i-=1
+
+            

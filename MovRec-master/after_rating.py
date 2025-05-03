@@ -1,16 +1,25 @@
 import torch 
 import psycopg2 
 import sys
+print("Script started - Loading tensors...")
 device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 num_user=151967+1
-title=torch.load(r'D:\movrec\model\toknized_tensor\title.pt')
-cast=torch.load(r'D:\movrec\model\toknized_tensor\cast.pt')
-director=torch.load(r'D:\movrec\model\toknized_tensor\director.pt')
-genre=torch.load(r'D:\movrec\model\toknized_tensor\genre.pt')
-overrview=torch.load(r'D:\movrec\model\toknized_tensor\overrview.pt')
-numeric_movie_data=torch.load(r'D:\movrec\model\toknized_tensor\numeric_movie_data.pt')
-production_countries=torch.load(r'D:\movrec\model\toknized_tensor\production_countries.pt')
-production_compaines=torch.load(r'D:\movrec\model\toknized_tensor\production_compaines.pt')
+title=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\title.pt', map_location=torch.device('cpu'))
+title=title.to(device=device)
+cast=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\cast.pt', map_location=torch.device('cpu'))
+cast=cast.to(device=device)
+director=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\director.pt', map_location=torch.device('cpu'))
+director=director.to(device=device)
+genre=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\genre.pt', map_location=torch.device('cpu'))
+genre=genre.to(device=device)
+overrview=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\overrview.pt', map_location=torch.device('cpu'))
+overrview=overrview.to(device=device)
+numeric_movie_data=torch.load(r'E:\MovRec-Initial\MovRec\MovRec\toknized_tensor\numeric_movie_data.pt', map_location=torch.device('cpu'))
+numeric_movie_data=numeric_movie_data.to(device=device)
+production_countries=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\production_countries.pt', map_location=torch.device('cpu'))
+production_countries=production_countries.to(device=device)
+production_compaines=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\production_compaines.pt', map_location=torch.device('cpu')    )
+production_compaines=production_compaines.to(device=device)
 connection_sting= "postgres://postgres:postgres@localhost:5432/movrec"
 class Model(torch.nn.Module):
     def __init__(self):
@@ -43,7 +52,7 @@ class Model(torch.nn.Module):
         movie=torch.cat((tit,ovrv_vec,dire,ct_vec,gn_vec,pd_cmp_vec,pd_count_vec,num_data),dim=-1)
         return torch.tensor(movie,device=device,dtype=torch.float32)
 model=Model()
-path=r"D:\movrec\MovRec-master\AiModel\base_model.pth"
+path=r"E:\MovRec-Initial\MovRec\MovRec\AiModel\base_model.pth"
 model.load_state_dict(torch.load(path))
 model=model.to(device=device)
 user_id=int(sys.argv[1])
@@ -68,3 +77,6 @@ with  psycopg2.connect(connection_sting) as connect:
     cursor.execute(f"INSERT INTO model.user_latent_attributes VALUES ({placeholders});",user_af )
     cursor.execute( f"INSERT INTO model.user_latent_attributes_backups VALUES ({placeholders+', %s'});",user)
     connect.commit()
+    print("Database update completed successfully")
+    print("Script finished execution")
+    
