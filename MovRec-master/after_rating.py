@@ -14,7 +14,7 @@ genre=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tens
 genre=genre.to(device=device)
 overrview=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\overrview.pt', map_location=torch.device('cpu'))
 overrview=overrview.to(device=device)
-numeric_movie_data=torch.load(r'E:\MovRec-Initial\MovRec\MovRec\toknized_tensor\numeric_movie_data.pt', map_location=torch.device('cpu'))
+numeric_movie_data=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\numeric_movie_data.pt', map_location=torch.device('cpu'))
 numeric_movie_data=numeric_movie_data.to(device=device)
 production_countries=torch.load(r'E:\graduation-project\MovRec\data_preprocessing\toknized_tensor\production_countries.pt', map_location=torch.device('cpu'))
 production_countries=production_countries.to(device=device)
