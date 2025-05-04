@@ -21,7 +21,7 @@ def uset_to_user(user_id):
         i_movie_rating_map= dict(cursor.fetchall())
         user_movies_set=set(i_movie_rating_map)
         s=SortedList()
-        rating1 = pd.read_csv(r'E:\data_preprocessing\cpdata3v2\ratings.csv')
+        rating1 = pd.read_csv(r'E:\graduation-project\MovRec\data_preprocessing\cpdata3v2\ratings.csv')
         data = {}
         for uid, mid, r in zip(rating1['userId'], rating1['movieId'], rating1['rating']):
             data.setdefault(uid, {})[mid] = r

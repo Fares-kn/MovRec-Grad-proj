@@ -52,7 +52,7 @@ class Model(torch.nn.Module):
         movie=torch.cat((tit,ovrv_vec,dire,ct_vec,gn_vec,pd_cmp_vec,pd_count_vec,num_data),dim=-1)
         return torch.tensor(movie,device=device,dtype=torch.float32)
 model=Model()
-path=r"E:\MovRec-Initial\MovRec\MovRec\AiModel\base_model.pth"
+path=r"E:\graduation-project\MovRec\MovRec-master\AiModel\base_model.pth"
 model.load_state_dict(torch.load(path))
 model=model.to(device=device)
 user_id=int(sys.argv[1])

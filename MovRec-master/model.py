@@ -61,7 +61,7 @@ class FinalModel(torch.nn.Module):
         x=self.output(x)
         return x.squeeze()
 model=FinalModel([256,128],torch.nn.ReLU())
-path=r'E:\MovRec-Initial\MovRec\MovRec\AiModel\model.pth'
+path=r"E:\graduation-project\MovRec\MovRec-master\AiModel\model.pth"
 model.load_state_dict(torch.load(path))
 model=model.to(device=device)
 user_id=int(sys.argv[1])
