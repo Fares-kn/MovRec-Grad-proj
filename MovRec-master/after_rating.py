@@ -66,7 +66,7 @@ with  psycopg2.connect(connection_sting) as connect:
     output=model(movie_id)
     result=torch.abs(torch.dot(user,output)-rating)
     result.backward()
-    user_af=(user-1e-3*user.grad).tolist()
+    user_af=(user-1e-2*user.grad).tolist()
     user_af.insert(0,user_id)
     placeholders = ", ".join(["%s"] * 101)
     user=user.tolist()

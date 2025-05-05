@@ -87,6 +87,6 @@ def uset_to_user(user_id):
             except Exception as e:
                 connect.rollback()
                 continue
-        return 1
         connect.commit()
+        return 1
 output=uset_to_user(user_id)
