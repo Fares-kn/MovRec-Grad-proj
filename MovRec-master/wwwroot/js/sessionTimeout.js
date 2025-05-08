@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const timeoutMinutes = 45; // Match this with your session timeout in Program.cs
     let isSessionExpired = false;
 
-    console.log('Session timeout initialized with', timeoutMinutes, 'minutes');
-
     // Create modal HTML
     const modalHTML = `
         <div class="session-modal-overlay">
@@ -23,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalButtons = document.querySelector('.session-modal-buttons');
 
     function showModal(message, buttons) {
-        console.log('Showing modal with message:', message);
         modalMessage.textContent = message;
         modalButtons.innerHTML = '';
 
@@ -43,12 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function resetSessionTimer() {
-        console.log('Resetting session timer');
         clearTimeout(sessionTimeout);
 
         // Set session timeout (45 minutes)
         sessionTimeout = setTimeout(() => {
-            console.log('Session timeout triggered');
             isSessionExpired = true;
             showModal('Your session has expired. Please log in again.', [
                 {
@@ -64,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function refreshSession() {
-        console.log('Refreshing session');
         fetch('/Account/RefreshSession', {
             method: 'POST',
             headers: {
@@ -74,10 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log('Session refresh successful');
                     resetSessionTimer();
                 } else {
-                    console.log('Session refresh failed');
                     isSessionExpired = true;
                     showModal('Your session has expired. Please log in again.', [
                         {
@@ -92,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch((error) => {
-                console.log('Session refresh error:', error);
                 isSessionExpired = true;
                 showModal('Your session has expired. Please log in again.', [
                     {
