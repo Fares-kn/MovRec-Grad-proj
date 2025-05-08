@@ -371,4 +371,20 @@ public class AccountController : Controller
         }
         return RedirectToAction("UserHome", "Home");
     }
+
+    [HttpPost]
+    [AuthorizeUser]
+    public IActionResult RefreshSession()
+    {
+        // If the user is authenticated, refresh their session
+        if (HttpContext.Session.GetInt32("UserId") != null)
+        {
+            // Extend the session by setting a new value
+            HttpContext.Session.SetInt32("UserId", HttpContext.Session.GetInt32("UserId").Value);
+            HttpContext.Session.SetString("Username", HttpContext.Session.GetString("Username"));
+            return Ok();
+        }
+
+        return Unauthorized();
+    }
 }
