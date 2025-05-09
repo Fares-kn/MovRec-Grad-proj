@@ -52,42 +52,7 @@ cd MovRec
 pip install -r requirements.txt
 ```
 
-3. Configure the database:
-   - Download and install PostgreSQL from: https://www.postgresql.org/download/
-   - During installation:
-     - Set username as: `postgres`
-     - Set password as: `postgres`
-     - Keep the default port: `5432`
-   - After installation, run the following commands to set up the database:
-   ```bash
-   # Create the database
-   psql -U postgres -c "CREATE DATABASE movrec;"
-
-   # Restore the database with the provided backup
-   psql -U postgres -d movrec -f movrec_backup.sql
-   ```
-   This will create and populate the database with all necessary tables and sample data.
-
-<<<<<<< HEAD
-
-```
-
-4. Build and run the application:
-=======
-4. Configure email settings in `appsettings.json`:
-```json
-{
-  "EmailSettings": {
-    "SmtpServer": "your-smtp-server",
-    "SmtpPort": 587,
-    "SmtpUsername": "your-username",
-    "SmtpPassword": "your-password",
-    "FromEmail": "your-email"
-  }
-}
-```
-
-5. Build and run the application:
+3. Build and run the application:
 >>>>>>> 79054dc (added a  readme file to show how to run the project)
 ```bash
 dotnet build
