@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     class: 'primary',
                     onClick: () => {
                         hideModal();
-                        window.location.href = '/Account/Login';
+                        window.location.href = '/Home/Index';
                     }
                 }
             ]);
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         class: 'primary',
                         onClick: () => {
                             hideModal();
-                            window.location.href = '/Account/Login';
+                            window.location.href = '/Home/Index';
                         }
                     }
                 ]);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     class: 'primary',
                     onClick: () => {
                         hideModal();
-                        window.location.href = '/Account/Login';
+                        window.location.href = '/Home/Index';
                     }
                 }
             ]);

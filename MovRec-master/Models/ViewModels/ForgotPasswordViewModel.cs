@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MovRec.Models
 {
+
     public class ForgotPasswordViewModel
     {
         [Required]

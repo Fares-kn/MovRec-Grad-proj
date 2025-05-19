@@ -30,7 +30,7 @@ namespace MovRec.Services
                 user_id = userId,
                 verification_code = code,
                 created_at = DateTime.UtcNow,
-                expires_at = DateTime.UtcNow.AddHours(1), // Code expires in 1 hour
+                expires_at = DateTime.UtcNow.AddHours(24), // Code expires in 24 hours
                 is_used = false,
                 verification_type = verificationType
             };

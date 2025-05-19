@@ -99,11 +99,11 @@
 
         <div class="ratings-container">
             <div class="rating-item">
-                <h3>Rating</h3>
+                <h3>Movrec Rating</h3>
                 <div class="rating-value">@Model.Movie.avg_rate/5</div>
             </div>
             <div class="rating-item">
-                <h3>Public Rating</h3>
+                <h3>Rating</h3>
                 <div class="rating-value">@($"{Model.Movie.public_rating:F2}")/5</div>
             </div>
         </div>
@@ -346,6 +346,8 @@
                         upStars(0);
                         $("#starrate").removeClass('saved');
                         $("#ratingValue").val(0);
+                        // Refresh the page to update all data
+                        window.location.reload();
                     }
                 },
                 error: function (xhr, status, error) {
