@@ -4,7 +4,6 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovRec", "MovRec.csproj", "{5B59E0AF-A5EC-F9D0-D6B7-049936584BDE}"
 EndProject
-
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,7 +14,6 @@ Global
 		{5B59E0AF-A5EC-F9D0-D6B7-049936584BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B59E0AF-A5EC-F9D0-D6B7-049936584BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B59E0AF-A5EC-F9D0-D6B7-049936584BDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

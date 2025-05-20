@@ -67,9 +67,13 @@ with  psycopg2.connect(connection_sting) as connect:
     result=torch.abs(torch.dot(user,output)-rating)
     result.backward()
     user_af=(user-1e-2*user.grad).tolist()
+    # Format all values to 15 decimal places for consistency
+    user_af = [float(f"{x:.15f}") for x in user_af]
     user_af.insert(0,user_id)
     placeholders = ", ".join(["%s"] * 101)
     user=user.tolist()
+    # Format all values to 15 decimal places for consistency
+    user = [float(f"{x:.15f}") for x in user]
     user.insert(0,user_id)
     user.insert(1,movie_id)
     cursor.execute("DELETE FROM model.user_latent_attributes_backups WHERE user_id = %s;",(user_id,))
